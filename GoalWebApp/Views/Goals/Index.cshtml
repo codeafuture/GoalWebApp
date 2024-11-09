@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GoalWebApp.Models.Goal>
+
+@{
+    ViewData["Title"] = "Goal List";
+}
+
+<h2>Goals</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">Create New Goal</a>
+
+<div class="row">
+    @foreach (var goal in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@goal.Name</h5>
+                    <p class="card-text">Target: @goal.Target</p>
+                    <p class="card-text">Progress: @goal.Progress</p>
+
+                    <!-- Progress Bar -->
+                    <div class="progress">
+                        <div class="progress-bar
+                                    @(goal.ProgressPercentage <= 30 ? "bg-danger" :
+                                      goal.ProgressPercentage <= 70 ? "bg-warning" :
+                                      "bg-success")"
+                             role="progressbar"
+                             style="width: @goal.ProgressPercentage%;"
+                             aria-valuenow="@goal.ProgressPercentage"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            @goal.ProgressPercentage%
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <a asp-action="Edit" asp-route-id="@goal.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@goal.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
